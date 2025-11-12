@@ -13,9 +13,9 @@ jobs:
     steps:
       - name: Set color
         id: color-selector
-        run: <USTAW ZMIENNĄ >
+        run: echo "green" >> $GITHUB_ENV
       - name: Get color
-        run: echo "The selected color is $COLOR"
+        run: echo "The selected color is ${{ steps.color-selector.outputs.color }} and $green"
         
   producer:
     runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
       - name: Make a sentence
         id: sentence_maker
         run: |
-            # USTAW ZMIENNĄ ŚRODOWISKOWĄ
+          echo "message=Hello from producer job!" >> $GITHUB_OUTPUT
 
   consumer:
     runs-on: ubuntu-latest
