@@ -8,7 +8,7 @@ env:
 
 jobs:
   display-variables:
-    name: Display Environment Variables
+    name: ${{ env.ENVIRONMENT_VAR }}
     runs-on: ubuntu-latest
     steps:
       - name: Use variables 1
