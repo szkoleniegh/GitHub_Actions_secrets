@@ -3,16 +3,26 @@ name: Display Variables Example
 on:
   workflow_dispatch:
 
-env:
+env: # Zmienne w scopie workflow
   cat_name: "Puszek"
+  WORKFLOW_VAR: "To jest zmienna workflow"
 
 jobs:
   display-variables:
-    name: ${{ env.ENVIRONMENT_VAR }}
+    name: Display Variables
     environment: test 
     runs-on: ubuntu-latest
+
+    env:
+      JOB_VAR: "To jest zmienna joba"
+
     steps:
+      - name: Display ENVIRONMENT_VAR in job name
+        run: echo "Job runs in environment: $ENVIRONMENT_VAR"
+
       - name: Use variables 1
+        env: 
+          STEP_VAR: "To jest zmienna stepu"
         run: |
           echo "Repository variable : $REPOSITORY_VAR"
           echo "Organization variable : $ORGANIZATION_VAR"
@@ -21,12 +31,19 @@ jobs:
           echo "Powinna być zmienna w scopie workflow: $WORKFLOW_VAR"
           echo "Powinna być zmienna w scopie joba: $JOB_VAR"
           echo "Powinna być zmienna w scopie stepu: $STEP_VAR"
-      - name: Use variables 2
+
+      - name: Use variables 1
         run: |
           echo "Ala ma kota o nazwie $cat_name"
           echo "Powinna być zmienna w scopie workflow: $WORKFLOW_VAR"
           echo "Powinna być zmienna w scopie joba: $JOB_VAR"
           echo "NIE powinna być zmienna w scopie stepu: $STEP_VAR"
+
+      - name: Show all environment variables
+        run: |
+          echo "ALL ENVIRONMENT VARIABLES"
+          env
+
 
   display-variables2:
     name: Display Workflow-Scoped Variables
@@ -37,3 +54,8 @@ jobs:
           echo "Powinna być zmienna w scopie workflow: $WORKFLOW_VAR"
           echo "NIE powinna być zmienna w scopie joba: $JOB_VAR"
           echo "NIE powinna być zmienna w scopie stepu: $STEP_VAR"
+
+      - name: Show all environment variables
+        run: |
+          echo "ALL ENVIRONMENT VARIABLES"
+          env
