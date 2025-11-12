@@ -17,9 +17,6 @@ jobs:
       JOB_VAR: "To jest zmienna joba"
 
     steps:
-      - name: Display ENVIRONMENT_VAR in job name
-        run: echo "Job runs in environment: $ENVIRONMENT_VAR"
-
       - name: Use variables 1
         env: 
           STEP_VAR: "To jest zmienna stepu"
