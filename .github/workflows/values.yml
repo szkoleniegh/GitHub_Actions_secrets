@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set color
-        id: color-selector
-        run: echo "green" >> $GITHUB_ENV
+        run: echo "COLOR=green" >> $GITHUB_ENV
+
       - name: Get color
-        run: echo "The selected color is ${{ steps.color-selector.outputs.color }} and $green"
+        run: echo "The selected color is $COLOR"
         
   producer:
     runs-on: ubuntu-latest
