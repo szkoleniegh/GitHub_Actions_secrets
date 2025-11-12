@@ -22,6 +22,7 @@ jobs:
           STEP_VAR: "To jest zmienna stepu"
         run: |
           echo "Repository variable : $REPOSITORY_VAR"
+          echo "Repository variable: ${{ vars.REPOSITORY_VAR }}"
           echo "Organization variable : $ORGANIZATION_VAR"
           echo "Environment variable : $ENVIRONMENT_VAR"
           echo "Ala ma kota o nazwie $cat_name"
