@@ -9,6 +9,7 @@ env:
 jobs:
   display-variables:
     name: ${{ env.ENVIRONMENT_VAR }}
+    environment: test 
     runs-on: ubuntu-latest
     steps:
       - name: Use variables 1
