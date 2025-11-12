@@ -9,7 +9,7 @@ env: # Zmienne w scopie workflow
 
 jobs:
   display-variables:
-    name: Display Variables
+    name: ${{ vars.ENVIRONMENT_VAR }}
     environment: test 
     runs-on: ubuntu-latest
 
