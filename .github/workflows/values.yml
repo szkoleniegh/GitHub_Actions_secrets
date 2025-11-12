@@ -32,8 +32,7 @@ jobs:
       - name: Print the message
         run: |
           echo $message
-          run: echo "Received: ${{ needs.producer.outputs.job_message }}"
-
+          echo "Received: ${{ needs.producer.outputs.job_message }}"
 
   job_1:
     name: Add 3 and 7
