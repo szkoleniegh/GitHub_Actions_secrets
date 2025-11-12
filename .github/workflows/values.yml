@@ -12,10 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set color
+        id: color-selector
         run: echo "COLOR=green" >> $GITHUB_ENV
 
       - name: Get color
-        run: echo "The selected color is $COLOR"
+        run: ${{ steps.color-selector.outputs.COLOR }}
         
   producer:
     runs-on: ubuntu-latest
@@ -23,7 +24,7 @@ jobs:
       - name: Make a sentence
         id: sentence_maker
         run: |
-          echo "message=Hello from producer job!" >> $GITHUB_OUTPUT
+          echo "message=Hello from producer job!" >> $GITHUB_ENV
 
   consumer:
     runs-on: ubuntu-latest
@@ -31,6 +32,8 @@ jobs:
       - name: Print the message
         run: |
           echo $message
+          run: echo "Received: ${{ needs.producer.outputs.job_message }}"
+
 
   job_1:
     name: Add 3 and 7
@@ -38,14 +41,24 @@ jobs:
     steps:
       - shell: bash
         run: |
-          expr 3 + 7 > NAZWA_PLIKU_Z_WYNIKIEM
+          expr 3 + 7 > result.txt
 
+      - name: Upload result as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: result-artifact
+          path: result.txt
   job_2:
     name: Multiply by 9
     needs: job_1
     runs-on: windows-latest
     steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: result-artifact
       - shell: bash
         run: |
-          value=`cat NAZWA_PLIKU_Z_ARTEFAKTU`
-          echo $(expr $value \* 9) 
+          value=$(cat result.txt)
+          echo "Value from artifact: $value"
+          echo "Result after multiplying by 9: $((value * 9))"
